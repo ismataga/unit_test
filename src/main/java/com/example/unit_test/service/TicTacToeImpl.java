@@ -5,16 +5,14 @@ import com.example.unit_test.repository.StepRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 @Service
 @RequiredArgsConstructor
-public class TicTacToe {
-    private final StepRepository stepRepository;
+public class TicTacToeImpl implements TicTacToe {
     private static final int SIZE = 3;
 
+    private final StepRepository stepRepository;
 
+    @Override
     public String play(int x, int y) {
 
         checkAxis(x, 'X');
@@ -27,7 +25,6 @@ public class TicTacToe {
             return lastPlayer + " is the winner";
         } else if (isDraw(board))
             return "The result is draw";
-//        saveToDb(lastPlayer,x,y);
         return "No winner";
     }
 
@@ -52,7 +49,6 @@ public class TicTacToe {
                 if (board[x][y] == '\0')
                     return false;
             }
-
         }
         return true;
     }
@@ -101,18 +97,9 @@ public class TicTacToe {
         }
     }
 
-    private void saveToDb(Character player, int x, int y) {
-
-        Step step = new Step();
-        step.setPlayer(player);
-        step.setXCord(x);
-        step.setYCord(y);
-        stepRepository.save(step);
-    }
 
     private void saveMove(int x, int y, char player) {
         Step step = new Step();
-
         step.setPlayer(player);
         step.setXCord(x);
         step.setYCord(y);
@@ -125,8 +112,8 @@ public class TicTacToe {
             System.out.println("");
             for (int j = 0; j < board.length; j++) {
                 if (board[i][j] == '\0')
-                    System.out.println("- ");
-                System.out.println(board[i][j] + " ");
+                    System.out.print("- ");
+                System.out.print(board[i][j] + " ");
 
             }
 

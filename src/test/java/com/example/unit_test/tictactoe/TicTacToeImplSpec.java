@@ -2,7 +2,7 @@ package com.example.unit_test.tictactoe;
 
 import com.example.unit_test.model.Step;
 import com.example.unit_test.repository.StepRepository;
-import com.example.unit_test.service.TicTacToe;
+import com.example.unit_test.service.TicTacToeImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,20 +16,20 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TicTacToeSpec {
+public class TicTacToeImplSpec {
     @Mock
     private StepRepository stepRepository;
-    private TicTacToe ticTacToe;
+    private TicTacToeImpl ticTacToeImpl;
 
     @BeforeEach
     public  void before() {
-        ticTacToe = new TicTacToe(stepRepository);
+        ticTacToeImpl = new TicTacToeImpl(stepRepository);
     }
 
     @Test
     public void whenXOutsideBoardThenRuntimeException() {
 
-        assertThatThrownBy(() -> ticTacToe.play(5, 2))
+        assertThatThrownBy(() -> ticTacToeImpl.play(5, 2))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("X is outside board");
 
@@ -39,7 +39,7 @@ public class TicTacToeSpec {
     @Test
     public void whenYOutsideBoardThenRuntimeException() {
 
-        assertThatThrownBy(() -> ticTacToe.play(2, 5))
+        assertThatThrownBy(() -> ticTacToeImpl.play(2, 5))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("Y is outside board");
 
@@ -62,7 +62,7 @@ public class TicTacToeSpec {
 
 
         //Assert
-        assertThatThrownBy(() -> ticTacToe.play(1, 2))  // player y
+        assertThatThrownBy(() -> ticTacToeImpl.play(1, 1))  // player y
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("Box is occupied");
 
@@ -72,7 +72,7 @@ public class TicTacToeSpec {
     @Test
     public void givenFirstTurnWhenNextPlayerThenX() {
 
-        assertThat(ticTacToe.nextPlayer()).isEqualTo('X');
+        assertThat(ticTacToeImpl.nextPlayer()).isEqualTo('X');
 
     }
 
@@ -90,13 +90,13 @@ public class TicTacToeSpec {
         when(stepRepository.findAll()).thenReturn(steps);
 
         //Act and assert
-        assertThat(ticTacToe.nextPlayer()).isEqualTo('O');
+        assertThat(ticTacToeImpl.nextPlayer()).isEqualTo('O');
 
     }
 
     @Test
     public void whenPlayThenNoWinner() {
-        String actual = ticTacToe.play(1, 1);
+        String actual = ticTacToeImpl.play(1, 1);
         assertThat(actual).isEqualTo("No winner");
     }
 
@@ -112,7 +112,7 @@ public class TicTacToeSpec {
 
         //Act and assert
 
-        assertThat(ticTacToe.play(3, 1))//x
+        assertThat(ticTacToeImpl.play(3, 1))//x
                 .isEqualTo("X is the winner");
     }
 
@@ -129,7 +129,7 @@ public class TicTacToeSpec {
 
         //Act and assert
 
-        assertThat(ticTacToe.play(1, 3))//x
+        assertThat(ticTacToeImpl.play(1, 3))//x
                 .isEqualTo("O is the winner");
     }
 
@@ -146,7 +146,7 @@ public class TicTacToeSpec {
 
         //Act and assert
 
-        assertThat(ticTacToe.play(3, 3))//x
+        assertThat(ticTacToeImpl.play(3, 3))//x
                 .isEqualTo("X is the winner");
     }
 
@@ -163,7 +163,7 @@ public class TicTacToeSpec {
 
         //Act and assert
 
-        assertThat(ticTacToe.play(3, 1))//x
+        assertThat(ticTacToeImpl.play(3, 1))//x
                 .isEqualTo("X is the winner");
     }
 
@@ -185,7 +185,7 @@ public class TicTacToeSpec {
 
         //Act and assert
 
-        assertThat(ticTacToe.play(3, 3))//x
+        assertThat(ticTacToeImpl.play(3, 3))//x
                 .isEqualTo("No winner");
     }
 }

@@ -12,12 +12,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameStep {
+public class Step {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Character player;
-    private int x;
-    private int y;
-
+    private int xCord;
+    private int yCord;
+    private char player;
 }

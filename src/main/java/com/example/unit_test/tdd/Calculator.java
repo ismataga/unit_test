@@ -1,2 +1,11 @@
-package com.example.unit_test.tdd;public interface Calculator {
+package com.example.unit_test.tdd;
+
+public interface Calculator {
+    int add(int a, int b);
+
+    int subtract(int a, int b);
+
+    int multiply(int a, int b);
+
+    int divide(int a, int b);
 }
